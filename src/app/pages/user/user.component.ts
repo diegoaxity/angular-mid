@@ -7,28 +7,33 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  styleUrls: ['./user.component.scss'],
 })
 export class UserComponent implements OnInit {
   user?: User;
 
-  constructor(private actRoute: ActivatedRoute, private userSvc: UserService, private dataSvc: DataService) {
-    this.actRoute.params.subscribe(parameters => {
+  constructor(
+    private actRoute: ActivatedRoute,
+    private userSvc: UserService,
+    private dataSvc: DataService
+  ) {
+    this.actRoute.params.subscribe((parameters) => {
       if (parameters.id) {
         // get user
         this.dataSvc.isLoading.next(true);
-        this.userSvc.getUser(parameters.id).subscribe(res => {
-          this.user = res.data;
-          this.dataSvc.isLoading.next(false);
-        }, err => {
-          this.dataSvc.isLoading.next(false);
-          this.dataSvc.message.next('Lo sentimos, ocurrió un error al cargar el usuario');
-        });
+        this.userSvc.getUser(parameters.id).subscribe(
+          (res) => {
+            this.user = res.data;
+            this.dataSvc.isLoading.next(false);
+          },
+          (err) => {
+            this.dataSvc.isLoading.next(false);
+            this.dataSvc.message.next(err);
+          }
+        );
       }
     });
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

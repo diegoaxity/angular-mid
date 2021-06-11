@@ -1,5 +1,27 @@
 <div class="container" *ngIf="user">
-  <img [src]="user?.avatar">
-  <h1>{{ user?.first_name + ' ' + user?.last_name }}</h1>
-  <h3>{{ user?.email }}</h3>
+  <div class="row">
+    <div class="col-md-4 col-xs-12 col-img">
+      <img style="height: 200px" [src]="user?.avatar" />
+    </div>
+    <div class="col-md-4 col-xs-12">
+      <h1>{{ user?.first_name + " " + user?.last_name }}</h1>
+      <h3>{{ user?.email }}</h3>
+    </div>
+    <div class="col-md-4 col-xs-12">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut
+        sapien hendrerit, feugiat mi et, placerat odio. In ante tortor, gravida
+        non eleifend a, tempor vel tellus. Aliquam rhoncus eleifend dignissim.
+        Fusce et feugiat massa. Quisque placerat tincidunt felis tincidunt
+        imperdiet. Etiam iaculis neque lectus, eu auctor mauris aliquet quis.
+        Aenean est risus, eleifend malesuada urna ut, varius feugiat enim. Fusce
+        fringilla consequat congue. Maecenas varius nisi orci, ac pharetra dui
+        lobortis sed. Pellentesque vel elementum erat. Suspendisse commodo nibh
+        vel massa facilisis rutrum in vel arcu. Vivamus vehicula justo sit amet
+        nulla mollis faucibus. Etiam et ante posuere, interdum metus eu, iaculis
+        elit. Sed nec ipsum lorem. Pellentesque efficitur tempor metus quis
+        tristique.
+      </p>
+    </div>
+  </div>
 </div>

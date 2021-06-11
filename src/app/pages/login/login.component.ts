@@ -8,25 +8,29 @@ import { LoginService } from 'src/app/services/login.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   formLogin?: FormGroup;
   loading = false;
 
-  constructor(private fb: FormBuilder, private loginSvc: LoginService, private dataSvc: DataService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private loginSvc: LoginService,
+    private dataSvc: DataService,
+    private router: Router
+  ) {
     this.formLogin = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(3)]]
+      password: ['', [Validators.required, Validators.minLength(3)]],
     });
 
-    this.dataSvc.isLoading.asObservable().subscribe(loading => {
+    this.dataSvc.isLoading.asObservable().subscribe((loading) => {
       this.loading = loading;
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   loginClick() {
     const data = this.formLogin?.value as LoginRequest;
@@ -36,16 +40,19 @@ export class LoginComponent implements OnInit {
       password: "12345"
     }
     */
-   this.dataSvc.isLoading.next(true);
-   this.loginSvc.login(data).subscribe(res => {
-     // res.token
-     console.log(res);
-     this.dataSvc.setToken(res.token);
-     this.dataSvc.isLoading.next(false);
-     this.router.navigate(['users']);
-   }, err => {
-     this.dataSvc.message.next(err.error.error);
-     this.dataSvc.isLoading.next(false);
-   });
+    this.dataSvc.isLoading.next(true);
+    this.loginSvc.login(data).subscribe(
+      (res) => {
+        // res.token
+        console.log(res);
+        this.dataSvc.setToken(res.token);
+        this.dataSvc.isLoading.next(false);
+        this.router.navigate(['users']);
+      },
+      (err) => {
+        this.dataSvc.message.next(err);
+        this.dataSvc.isLoading.next(false);
+      }
+    );
   }
 }

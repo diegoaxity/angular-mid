@@ -7,24 +7,27 @@ import { UsersComponent } from './pages/users/users.component';
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    loadChildren: () =>
+      import('./pages/login/login.module').then((m) => m.LoginModule),
   },
   {
     path: 'users',
-    component: UsersComponent
+    loadChildren: () =>
+      import('./pages/users/users.module').then((m) => m.UsersModule),
   },
   {
     path: 'user/:id',
-    component: UserComponent
+    loadChildren: () =>
+      import('./pages/user/user.module').then((m) => m.UserModule),
   },
   {
     path: '**',
-    redirectTo: 'login'
-  }
+    redirectTo: 'login',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
