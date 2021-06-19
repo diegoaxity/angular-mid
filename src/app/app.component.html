@@ -1,5 +1,21 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="toolbar" color="primary">
   <span>Angular Mid</span>
+  <mat-form-field class="lang-select">
+    <mat-label>
+      {{ "language.title" | translate }}
+    </mat-label>
+    <mat-select
+      [(value)]="languageSelected"
+      (selectionChange)="changeLanguage()"
+    >
+      <mat-option value="es">{{ "language.es" | translate }}</mat-option>
+      <mat-option value="en">{{ "language.en" | translate }}</mat-option>
+    </mat-select>
+  </mat-form-field>
 </mat-toolbar>
-<mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading"></mat-progress-bar>
+<mat-progress-bar
+  mode="indeterminate"
+  color="accent"
+  *ngIf="loading"
+></mat-progress-bar>
 <router-outlet></router-outlet>

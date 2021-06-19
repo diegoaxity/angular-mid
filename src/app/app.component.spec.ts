@@ -1,16 +1,30 @@
 import { TestBed } from '@angular/core/testing';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
+import {
+  TranslateFakeLoader,
+  TranslateLoader,
+  TranslateModule,
+} from '@ngx-translate/core';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        MatSnackBarModule,
+        MatToolbarModule,
+        MatProgressBarModule,
+        MatSelectModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
+        }),
       ],
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
     }).compileComponents();
   });
 
@@ -18,18 +32,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'angular-mid'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-mid');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('angular-mid app is running!');
   });
 });

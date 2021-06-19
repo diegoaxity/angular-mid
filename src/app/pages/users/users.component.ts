@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { User } from 'src/app/model/user.model';
 import { DataService } from 'src/app/services/data.service';
 import { UserService } from 'src/app/services/user.service';
@@ -17,7 +18,8 @@ export class UsersComponent implements OnInit {
   constructor(
     private userSvc: UserService,
     private dataSvc: DataService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
     this.dataSvc.isLoading.next(true);
     this.userSvc.getUsers().subscribe(
@@ -26,9 +28,9 @@ export class UsersComponent implements OnInit {
         this.dataSvc.isLoading.next(false);
       },
       (err) => {
-        this.dataSvc.message.next(
-          'Lo sentimos ocurrió un error al cargar los usuarios'
-        );
+        this.translate.get('pages.users.errors.loading').subscribe((msg) => {
+          this.dataSvc.message.next(msg);
+        });
         this.dataSvc.isLoading.next(false);
       }
     );

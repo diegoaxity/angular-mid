@@ -1,0 +1,36 @@
+{
+  "errors": {
+    "general": "Lo sentimos, ocurrió un error inesperado",
+    "timeout": "Lo sentimos, el tiempo de espera se ha agotado",
+    "notFound": "Elemento no encontrado",
+    "server": "Lo sentimos, ocurrió un error en el servidor :("
+  },
+  "language": {
+    "title": "Idioma",
+    "es": "Español",
+    "en": "Inglés"
+  },
+  "pages": {
+    "login": {
+      "title-email": "Correo electrónico",
+      "title-password": "Contraseña",
+      "button-login": "Ingresar",
+      "errors": {
+        "email-required": "El correo electrónico es requerido",
+        "email-invalid": "Ingresa un correo electrónico válido",
+        "password-required": "La contraseña es requerida",
+        "password-length": "Ingresa más de 3 caracteres"
+      }
+    },
+    "users": {
+      "columns": {
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "avatar": "Avatar"
+      },
+      "errors": {
+        "loading": "Lo sentimos ocurrió un error al cargar los usuarios"
+      }
+    }
+  }
+}

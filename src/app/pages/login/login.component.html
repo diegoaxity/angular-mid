@@ -1,15 +1,46 @@
 <div class="container" *ngIf="formLogin" [formGroup]="formLogin">
   <mat-form-field>
-    <mat-label>Email</mat-label>
+    <mat-label>{{ "pages.login.title-email" | translate }}</mat-label>
     <input matInput formControlName="email" />
-    <mat-error *ngIf="formLogin?.get('email')?.errors?.required && !formLogin?.get('email')?.errors?.email">El email es requerido</mat-error>
-    <mat-error *ngIf="!formLogin?.get('email')?.errors?.required && formLogin?.get('email')?.errors?.email">Ingresa un email válido</mat-error>
+    <mat-error
+      *ngIf="
+        formLogin?.get('email')?.errors?.required &&
+        !formLogin?.get('email')?.errors?.email
+      "
+      >{{ "pages.login.errors.email-required" | translate }}</mat-error
+    >
+    <mat-error
+      *ngIf="
+        !formLogin?.get('email')?.errors?.required &&
+        formLogin?.get('email')?.errors?.email
+      "
+      >{{ "pages.login.errors.email-invalid" | translate }}</mat-error
+    >
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Contraseña</mat-label>
+    <mat-label>{{ "pages.login.title-password" | translate }}</mat-label>
     <input type="password" matInput formControlName="password" />
-    <mat-error *ngIf="formLogin?.get('password')?.errors?.required && !formLogin?.get('password')?.errors?.minlength">La contraseña es requerida</mat-error>
-    <mat-error *ngIf="!formLogin?.get('password')?.errors?.required && formLogin?.get('password')?.errors?.minlength">Ingresa más de 3 caracteres</mat-error>
+    <mat-error
+      *ngIf="
+        formLogin?.get('password')?.errors?.required &&
+        !formLogin?.get('password')?.errors?.minlength
+      "
+      >{{ "pages.login.errors.password-required" | translate }}</mat-error
+    >
+    <mat-error
+      *ngIf="
+        !formLogin?.get('password')?.errors?.required &&
+        formLogin?.get('password')?.errors?.minlength
+      "
+      >{{ "pages.login.errors.password-length" | translate }}</mat-error
+    >
   </mat-form-field>
-  <button mat-raised-button color="primary" [disabled]="formLogin?.invalid || loading" (click)="loginClick()">Ingresar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="formLogin?.invalid || loading"
+    (click)="loginClick()"
+  >
+    {{ "pages.login.button-login" | translate }}
+  </button>
 </div>

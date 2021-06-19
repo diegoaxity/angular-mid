@@ -9,12 +9,16 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError, TimeoutError } from 'rxjs';
 import { AppConfig, ExcludedEndpoints } from '../constants/config';
 import { DataService } from '../services/data.service';
-import { catchError, timeout } from 'rxjs/operators';
+import { catchError, flatMap, timeout } from 'rxjs/operators';
 import { Messages } from '../constants/messages';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private dataSvc: DataService) {}
+  constructor(
+    private dataSvc: DataService,
+    private translate: TranslateService
+  ) {}
 
   private addToken(req: HttpRequest<any>): HttpRequest<any> {
     if (this.isEndpointExcluded(req.url)) {
@@ -50,7 +54,9 @@ export class TokenInterceptor implements HttpInterceptor {
       timeout(AppConfig.defaultTimeout),
       catchError((err: any) => {
         if (err instanceof TimeoutError) {
-          return throwError(Messages.errors.timeout);
+          return this.translate
+            .get(Messages.errors.timeout)
+            .pipe(flatMap((val: string) => throwError(val)));
         }
         if (err instanceof HttpErrorResponse) {
           let msg = Messages.errors.general;
@@ -60,10 +66,18 @@ export class TokenInterceptor implements HttpInterceptor {
           if (err.status === 500) {
             msg = Messages.errors.server;
           }
-          return throwError(err.error.error || msg);
+          if (err.error.error) {
+            return throwError(err.error.error);
+          } else {
+            return this.translate
+              .get(msg)
+              .pipe(flatMap((val: string) => throwError(val)));
+          }
         }
 
-        return throwError(Messages.errors.general);
+        return this.translate
+          .get(Messages.errors.general)
+          .pipe(flatMap((val: string) => throwError(val)));
       })
     );
   }

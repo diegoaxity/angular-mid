@@ -1,0 +1,36 @@
+{
+  "errors": {
+    "general": "Sorry, an unexpected error occured",
+    "timeout": "Sorry, timeout reached",
+    "notFound": "Item not found",
+    "server": "Sorry, a server error occured :("
+  },
+  "language": {
+    "title": "Language",
+    "es": "Spanish",
+    "en": "English"
+  },
+  "pages": {
+    "login": {
+      "title-email": "Email",
+      "title-password": "Password",
+      "button-login": "Login",
+      "errors": {
+        "email-required": "E-mail is required",
+        "email-invalid": "Please enter a valid e-mail address",
+        "password-required": "Password is required",
+        "password-length": "Enter 3 characters or more"
+      }
+    },
+    "users": {
+      "columns": {
+        "name": "Name",
+        "email": "E-mail",
+        "avatar": "Avatar"
+      },
+      "errors": {
+        "loading": "Sorry, we could not load users"
+      }
+    }
+  }
+}

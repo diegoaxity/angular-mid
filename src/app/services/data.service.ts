@@ -3,13 +3,13 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { StorageKeys } from '../constants/config';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataService {
   isLoading = new Subject<boolean>();
   message = new Subject<string>();
 
-  constructor() { }
+  constructor() {}
 
   setToken(token: string) {
     sessionStorage.setItem(StorageKeys.token, token);
