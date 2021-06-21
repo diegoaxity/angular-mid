@@ -15,7 +15,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TokenInterceptor } from './utils/token.interceptor';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +29,9 @@ import { MatSelectModule } from '@angular/material/select';
     HttpClientModule,
     MatProgressBarModule,
     MatSnackBarModule,
-    MatSelectModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

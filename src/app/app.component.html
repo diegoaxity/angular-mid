@@ -1,17 +1,16 @@
 <mat-toolbar class="toolbar" color="primary">
   <span>Angular Mid</span>
-  <mat-form-field class="lang-select">
-    <mat-label>
-      {{ "language.title" | translate }}
-    </mat-label>
-    <mat-select
-      [(value)]="languageSelected"
-      (selectionChange)="changeLanguage()"
-    >
-      <mat-option value="es">{{ "language.es" | translate }}</mat-option>
-      <mat-option value="en">{{ "language.en" | translate }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <button mat-icon-button [matMenuTriggerFor]="menuLang">
+    <mat-icon>translate</mat-icon>
+  </button>
+  <mat-menu #menuLang>
+    <button mat-menu-item (click)="changeLanguage('es')">
+      <span>{{ "language.es" | translate }}</span>
+    </button>
+    <button mat-menu-item (click)="changeLanguage('en')">
+      <span>{{ "language.en" | translate }}</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>
 <mat-progress-bar
   mode="indeterminate"

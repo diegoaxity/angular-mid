@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginRequest } from 'src/app/model/login.model';

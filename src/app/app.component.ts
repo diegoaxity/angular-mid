@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { DataService } from './services/data.service';
@@ -11,13 +17,14 @@ import { DataService } from './services/data.service';
 export class AppComponent {
   title = 'angular-mid';
   loading = false;
-  languageSelected = 'es';
 
   constructor(
     private dataSvc: DataService,
     private snackbar: MatSnackBar,
-    private translate: TranslateService
+    public translate: TranslateService
   ) {
+    this.translate.setDefaultLang('es');
+
     this.dataSvc.isLoading.asObservable().subscribe((loading) => {
       this.loading = loading;
     });
@@ -27,11 +34,9 @@ export class AppComponent {
         duration: 3500,
       });
     });
-
-    this.translate.setDefaultLang(this.languageSelected);
   }
 
-  changeLanguage() {
-    this.translate.use(this.languageSelected);
+  changeLanguage(lang: string) {
+    this.translate.use(lang);
   }
 }

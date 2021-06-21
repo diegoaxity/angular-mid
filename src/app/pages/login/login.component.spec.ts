@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
@@ -12,10 +17,9 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Observable, of, Subject, throwError } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 import { DataService } from 'src/app/services/data.service';
-import { StorageKeys } from 'src/app/constants/config';
 
 const loginMock = require('../../../mocks/login.json');
 
@@ -35,11 +39,8 @@ describe('LoginComponent', () => {
     loginSvcSpy.login.and.callFake(() => {
       return of(loginMock);
     });
-    dataSvcSpy.isLoading = jasmine.createSpyObj('', ['asObservable', 'next']);
-    dataSvcSpy.isLoading.asObservable.and.callFake(() => {
-      return of(true);
-    });
-    dataSvcSpy.message = jasmine.createSpyObj('', ['next']);
+    dataSvcSpy.isLoading = new Subject<boolean>();
+    dataSvcSpy.message = new Subject<string>();
 
     await TestBed.configureTestingModule({
       declarations: [LoginComponent],
@@ -80,7 +81,7 @@ describe('LoginComponent', () => {
     expect(dataSvcSpy.setToken).toHaveBeenCalledWith('QpwL5tke4Pnpja7X4');
   });
 
-  it('should click login with error', () => {
+  it('should click login with error', fakeAsync(() => {
     loginSvcSpy.login.and.callFake(() => {
       return throwError('error');
     });
@@ -89,8 +90,29 @@ describe('LoginComponent', () => {
       username: 'test@mail.com',
       password: '12345',
     });
+
+    let spyLoading = spyOn(dataSvcSpy.isLoading, 'next');
+    let spyMessage = spyOn(dataSvcSpy.message, 'next');
     component.loginClick();
-    expect(dataSvcSpy.message.next).toHaveBeenCalled();
-    expect(dataSvcSpy.isLoading.next).toHaveBeenCalled();
-  });
+    expect(spyLoading).toHaveBeenCalledWith(true);
+    expect(spyMessage).toHaveBeenCalledWith('error');
+    tick();
+    expect(spyLoading).toHaveBeenCalledWith(false);
+  }));
+
+  it('should click login with no data', fakeAsync(() => {
+    loginSvcSpy.login.and.callFake(() => {
+      return throwError('error');
+    });
+
+    component.formLogin = undefined;
+
+    let spyLoading = spyOn(dataSvcSpy.isLoading, 'next');
+    let spyMessage = spyOn(dataSvcSpy.message, 'next');
+    component.loginClick();
+    expect(spyLoading).toHaveBeenCalledWith(true);
+    expect(spyMessage).toHaveBeenCalledWith('error');
+    tick();
+    expect(spyLoading).toHaveBeenCalledWith(false);
+  }));
 });
